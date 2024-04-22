@@ -1,6 +1,3 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-
 import java.io.*;
 import java.util.*;
 
@@ -70,8 +67,13 @@ public class Vera_Main {
             return;
         }
         for (Vera_Post post : posts.values()) {
-            if (!post.getUser_id().equals(username) && ("public".equals(post.getVisibility()) || ("friend".equals(post.getVisibility()) && users.get(post.getUser_id()).getFriends().contains(username)))) {
+            if (post.getUser_id().equals(username) || "public".equals(post.getVisibility())) {
                 visiblePosts.add(post.getPost_id());
+            } else if ("friend".equals(post.getVisibility())) {
+                Vera_User postOwner = users.get(post.getUser_id());
+                if (postOwner != null && postOwner.getFriends().contains(username)) {
+                    visiblePosts.add(post.getPost_id());
+                }
             }
         }
         System.out.println(username + "'s posts: " + String.join(", ", visiblePosts));
@@ -110,8 +112,12 @@ public class Vera_Main {
                     String userFilePath = scanner.next();
                     System.out.println("Please enter path to post info file:");
                     String postFilePath = scanner.next();
-                    loadUserData(userFilePath);
-                    loadPostData(postFilePath);
+                    try {
+                        loadUserData(userFilePath);
+                        loadPostData(postFilePath);
+                    } catch (IOException e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
 
                     break;
                 case 2:
