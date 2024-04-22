@@ -1,12 +1,12 @@
 import java.util.*;
 
-public class User {
+public class Vera_User {
     String username;
     String displayName;
     String state;
     List<String> friends = new ArrayList<>();
 
-    public User(String username, String displayname, String state, ArrayList<String> friends) {
+    public Vera_User(String username, String displayname, String state, ArrayList<String> friends) {
         this.username = username;
         this.displayName = displayname;
         this.state = state;

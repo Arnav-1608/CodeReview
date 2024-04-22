@@ -4,9 +4,9 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
-    static Map<String, User> users = new HashMap<>();
-    static Map<String, Post> posts = new HashMap<>();
+public class Vera_Main {
+    static Map<String, Vera_User> users = new HashMap<>();
+    static Map<String, Vera_Post> posts = new HashMap<>();
 
     public static void loadUserData(String filepath) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filepath));
@@ -18,7 +18,7 @@ public class Main {
             String state = parts[2];
             List<String> friends = Arrays.asList(parts[3].replaceAll("[\\[\\]]", "").split(","));
             System.out.println(username + ", " + displayName + ", " + state);
-            User user = new User(username, displayName, state, new ArrayList<>(friends));
+            Vera_User user = new Vera_User(username, displayName, state, new ArrayList<>(friends));
             users.put(username, user);
         }
         reader.close();
@@ -33,15 +33,15 @@ public class Main {
             String user_id = parts[1];
             String visibility = parts[2];
             System.out.println(post_id + ", " + user_id + ", " + visibility);
-            Post post = new Post(post_id, user_id, visibility);
+            Vera_Post post = new Vera_Post(post_id, user_id, visibility);
             posts.put(post_id, post);
         }
         reader.close();
     }
 
     public static void checkPostVisibility(String post_id, String username) {
-        Post post = posts.get(post_id);
-        User user = users.get(username);
+        Vera_Post post = posts.get(post_id);
+        Vera_User user = users.get(username);
         if (post == null || user == null) {
             System.out.println("Post or user not found.");
             return;
@@ -64,12 +64,12 @@ public class Main {
 
     public static void retrievePosts(String username) {
         List<String> visiblePosts = new ArrayList<>();
-        User user = users.get(username);
+        Vera_User user = users.get(username);
         if (user == null) {
             System.out.println("User not found.");
             return;
         }
-        for (Post post : posts.values()) {
+        for (Vera_Post post : posts.values()) {
             if (!post.getUser_id().equals(username) && ("public".equals(post.getVisibility()) || ("friend".equals(post.getVisibility()) && users.get(post.getUser_id()).getFriends().contains(username)))) {
                 visiblePosts.add(post.getPost_id());
             }
@@ -79,7 +79,7 @@ public class Main {
 
     public static void searchUsersByLocation(String state) {
         List<String> matchedUsers = new ArrayList<>();
-        for (User user : users.values()) {
+        for (Vera_User user : users.values()) {
             if (user.getState().equals(state)) {
                 matchedUsers.add(user.getDisplayName());
             }
