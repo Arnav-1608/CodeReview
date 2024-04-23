@@ -1,0 +1,45 @@
+Test Case 1: Load Input Data
+Input:
+User file path: user-info.txt
+Posts file path: post-info.txt
+Expected Output:
+Verify that the user information and post information are loaded correctly.
+Test Case 2: Check Visibility (Public Post)
+Input:
+Choose option 2 to check visibility.
+Post ID: post3298
+Username: petpal4ever
+Expected Output:
+Access Permitted
+Test Case 3: Check Visibility (Friend's Post)
+Input:
+Choose option 2 to check visibility.
+Post ID: post2123
+Username: goldenlover1
+Expected Output:
+Access Permitted
+Test Case 4: Check Visibility (Non-Friend's Post)
+Input:
+Choose option 2 to check visibility.
+Post ID: post1112
+Username: whiskerwatcher
+Expected Output:
+Access Denied
+Test Case 5: Retrieve Posts (With Public and Friend's Posts)
+Input:
+Choose option 3 to retrieve posts.
+Username: whiskerwatcher
+Expected Output:
+Viewable Post: post1112, post2123, post3298
+Test Case 6: Search Users By Location (No Users Found)
+Input:
+Choose option 4 to search for users by location.
+Location: TX
+Expected Output:
+No Users from TX
+Test Case 7: Search Users By Location (Users Found)
+Input:
+Choose option 4 to search for users by location.
+Location: CA
+Expected Output:
+Users from the State CA: Jane Doe
