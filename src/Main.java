@@ -6,21 +6,21 @@ public class Main {
     public static void main(String[] args)throws IOException {
         Scanner sc = new Scanner(System.in);
         int choice;
-        List<Users> allUsers = null;
-        List<Posts> allPosts = null;
+        List<Users> allUsers = null; //List to store all user data
+        List<Posts> allPosts = null; //List to store all post data
         do {
             System.out.println("Select :\n1: Load Input Data\n2: Check Visibility\n3: Retrieve Posts\n4: Search Users By Location\n5: Exit");
             System.out.println("Please Enter your selection ");
             choice = sc.nextInt();
-            String clean = sc.nextLine();
+            String clean = sc.nextLine(); //Clean the input buffer
             switch (choice) {
                 case 1:
                     System.out.println("Please Enter Users File Path");
-                    String fileUsers = sc.nextLine();
-                    allUsers = readUsersFromFile(fileUsers);
+                    String fileUsers = sc.nextLine(); //Get file path for users
+                    allUsers = readUsersFromFile(fileUsers); //Read users data from file
                     System.out.println("Please Enter Posts File Path");
-                    String filePosts = sc.nextLine();
-                    allPosts = readPostsFromFile(filePosts);
+                    String filePosts = sc.nextLine(); //Get file path for posts
+                    allPosts = readPostsFromFile(filePosts); //Read posts data from file
                     break;
 
                 case 2:
@@ -30,14 +30,15 @@ public class Main {
                     String postId = sc.nextLine();
                     System.out.println("\nPlease Enter your USERNAME : ");
                     String userName = sc.nextLine();
+                    //Loop through all posts to find the requested post
                     for (Posts post : allPosts) {
                         if (post.getPostId().equals(postId)) {
                             if(post.getUserId().equals(userName)){
-                                flag = 1;
+                                flag = 1; //Access permitted if user owns the post
                             }
                             else {
                                 if (post.getVisibility().equals("public")) {
-                                    flag = 1;
+                                    flag = 1; //Access permitted if post is public
                                 } else {
                                     postOwnerUserName = post.getUserId();
                                 }
@@ -54,7 +55,7 @@ public class Main {
                                 List<String> friends = user.getFriends();
                                 for(String friend : friends){
                                     if(friend.equals(userName)){
-                                        flag = 1;
+                                        flag = 1; //Access permitted if user is a friend
                                         System.out.println("Access Permitted");
                                         break;
                                     }
@@ -74,12 +75,14 @@ public class Main {
                     List<String> viewablePost = new ArrayList<>();
                     System.out.println("\nPlease Enter your USERNAME : ");
                     userName = sc.nextLine();
+                    //Find user's friends
                     for(Users user : allUsers){
                         if(user.getUsername().equals(userName)){
                             friends = user.getFriends();
                             break;
                         }
                     }
+
                     for(Posts post : allPosts){
                         if(post.getVisibility().equals("public")){
                             viewablePost.add(post.getPostId());
@@ -112,6 +115,7 @@ public class Main {
                     String location = sc.next();
                     boolean statePresent = false;
                     List<String> usersByLocation = new ArrayList<>();
+                    //Find users from the given location
                     for(Users user : allUsers){
                         if(user.getState().equalsIgnoreCase(location)){
                             statePresent = true;
